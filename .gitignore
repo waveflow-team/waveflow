@@ -1,0 +1,7 @@
+/bazel-*
+.idea/**
+.idea
+.sandbox
+tools/autoconf.rc
+# emacs org-mode files
+tmp.org
