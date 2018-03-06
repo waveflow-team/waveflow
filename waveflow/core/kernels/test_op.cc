@@ -6,6 +6,12 @@
 using namespace tensorflow;
 
 namespace waveflow {
+
+namespace functor {
+extern template struct Test<CPUDevice, float>;
+extern template struct Test<CPUDevice, double>;
+}
+
 template <typename Device, typename T>
 class TestOpKernel: public OpKernel {
  public:

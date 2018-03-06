@@ -18,7 +18,19 @@ struct Test {
 };
 
 // CPU specialization
-#include "waveflow/core/kernels/test.inc"
+template<typename T>
+struct Test<CPUDevice, T> {
+  // Intentionally left unimplemented.
+  void operator()(const CPUDevice &d, int size, const T *in, T *out);
+};
+// GPU specialization
+#ifdef GOOGLE_CUDA
+template<typename T>
+struct Test<GPUDevice, T> {
+  // Intentionally left unimplemented.
+  void operator()(const GPUDevice &d, int size, const T *in, T *out);
+};
+#endif
 }
 }
 
