@@ -11,7 +11,6 @@ def wf_op_cc_library(name, visibility = [], srcs = [], gpu_srcs = [], deps = [])
     "@local_config_cuda//cuda:cuda_headers",
     "@local_config_cuda//cuda:cudart_static",
   ]
-  cuda_copts = ["-DGOOGLE_CUDA=1"]
 
   tf_srcs = [
      "@local_config_tensorflow//:lib/libtensorflow_framework.so"
