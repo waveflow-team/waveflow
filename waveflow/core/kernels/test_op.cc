@@ -34,4 +34,11 @@ class TestOpKernel: public OpKernel {
 REGISTER_CPU(float)
 REGISTER_CPU(double)
 #undef REGISTER_CPU
+
+#ifdef GOOGLE_CUDA
+#define REGISTER_GPU(dtype) REGISTER_GPU_KERNEL("TestOp", TestOpKernel, dtype)
+REGISTER_GPU(float)
+REGISTER_GPU(double)
+#undef REGISTER_GPU
+#endif
 }

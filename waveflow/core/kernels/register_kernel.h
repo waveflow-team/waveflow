@@ -10,5 +10,11 @@
                               .TypeConstraint<dtype>("dtype"),        \
                           opKernel<waveflow::CPUDevice, dtype>);
 
+// Convenience macro for cpu op kernel registration.
+#define REGISTER_GPU_KERNEL(name, opKernel, dtype)                    \
+  REGISTER_KERNEL_BUILDER(Name(name)                                  \
+                              .Device(DEVICE_GPU)                     \
+                              .TypeConstraint<dtype>("dtype"),        \
+                          opKernel<waveflow::GPUDevice, dtype>);
 
 #endif //WAVEFLOW_REGISTER_KERNEL_H
