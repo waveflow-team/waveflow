@@ -27,7 +27,8 @@ def _tensorflow_autoconf_impl(repository_ctx):
   print("Using %s=%s" % (_TF_LIB_PATH, tf_conf.lib_path))
   repository_ctx.symlink(tf_conf.include_path, 'include')
   repository_ctx.symlink(tf_conf.lib_path, 'lib')
-  repository_ctx.template('BUILD', Label("//deps/tensorflow:tensorflow.BUILD"))
+  repository_ctx.template('BUILD', Label("//third_party/tensorflow:tensorflow.BUILD"))
+
 
 
 tensorflow_configure = repository_rule(

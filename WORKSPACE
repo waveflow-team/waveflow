@@ -8,21 +8,15 @@ http_archive(
     urls = ["https://github.com/bazelbuild/bazel-skylib/archive/%s.tar.gz" % bazel_skylib_version]
 )
 load("@bazel_skylib//:lib.bzl", "versions")
-load("//deps/tensorflow:tensorflow_configure.bzl", "tensorflow_configure")
+load("//third_party/tensorflow:tensorflow_configure.bzl", "tensorflow_configure")
+load("//third_party/gpus:cuda_configure.bzl", "cuda_configure")
 
 # Workspace requirements:
 versions.check("0.10.1") # min Bazel version
 
-# Toolchains:
-register_toolchains(
-  '//waveflow:linux_cpu_toolchain',
-  '//waveflow:linux_cuda_toolchain',
-  '//waveflow:windows_cpu_toolchain',
-  '//waveflow:windows_cuda_toolchain'
-)
-
 # Waveflow deps:
-## Tensorflow
+cuda_configure(name="local_config_cuda")
 tensorflow_configure(name="local_config_tensorflow")
+
 
 
