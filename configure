@@ -4,8 +4,8 @@ set -xe
 PYTHON_BIN=python
 CONF_FILE=tools/autoconf.rc
 
-TF_INC=($(${PYTHON_BIN} -c 'import tensorflow as tf; print(tf.sysconfig.get_include())'))
-TF_LIB=($(${PYTHON_BIN} -c 'import tensorflow as tf; print(tf.sysconfig.get_lib())'))
+TF_INC=$(${PYTHON_BIN} -c 'import tensorflow as tf; print(tf.sysconfig.get_include())')
+TF_LIB=$(${PYTHON_BIN} -c 'import tensorflow as tf; print(tf.sysconfig.get_lib())')
 
 echo "build --action_env TF_INCLUDE_PATH=${TF_INC}" > ${CONF_FILE}
 echo "build --action_env TF_LIB_PATH=${TF_LIB}" >> ${CONF_FILE}
