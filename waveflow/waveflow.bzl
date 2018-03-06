@@ -5,7 +5,7 @@ load(
 )
 
 # Waveflow custom rules:
-def wf_op_cc_library(name, visibility = [], srcs = [], deps = []):
+def wf_op_cc_library(name, visibility = [], srcs = [], gpu_srcs = [], deps = []):
   lib_name = "lib%s.so" % name
   cuda_deps = [
     "@local_config_cuda//cuda:cuda_headers",
@@ -22,16 +22,26 @@ def wf_op_cc_library(name, visibility = [], srcs = [], deps = []):
   ]
   tf_copts = [
     "-std=c++11",
-    '-D_GLIBCXX_USE_CXX11_ABI=0',
-    '-fPIC'
+    "-D_GLIBCXX_USE_CXX11_ABI=0",
+    "-fPIC"
   ]
+
+  if gpu_srcs:
+    gpu_target_name = name + "_gpu"
+    native.cc_library(
+      name = gpu_target_name,
+      srcs = gpu_srcs,
+      copts = cuda_default_copts,
+      deps = deps + if_cuda(cuda_deps)
+    )
+    cuda_deps = cuda_deps + [gpu_target_name]
 
   native.cc_binary(
       name = lib_name,
       srcs = srcs + tf_srcs,
       deps = deps + tf_deps + if_cuda(cuda_deps),
       linkshared = 1,
-      copts = tf_copts + if_cuda(cuda_copts),
+      copts = tf_copts,
   )
   native.alias(
     name = name,
