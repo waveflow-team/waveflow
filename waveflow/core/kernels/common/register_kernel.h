@@ -4,17 +4,17 @@
 #include "tensorflow/core/framework/op_kernel.h"
 
 // Convenience macro for cpu op kernel registration.
-#define REGISTER_CPU_KERNEL(name, opKernel, dtype)                    \
+#define REGISTER_CPU_KERNEL(name, opKernel, T)                        \
   REGISTER_KERNEL_BUILDER(Name(name)                                  \
                               .Device(DEVICE_CPU)                     \
-                              .TypeConstraint<dtype>("dtype"),        \
-                          opKernel<waveflow::CPUDevice, dtype>);
+                              .TypeConstraint<T>("T"),                \
+                          opKernel<waveflow::CPUDevice, T>);
 
 // Convenience macro for gpu op kernel registration.
-#define REGISTER_GPU_KERNEL(name, opKernel, dtype)                    \
+#define REGISTER_GPU_KERNEL(name, opKernel, T)                        \
   REGISTER_KERNEL_BUILDER(Name(name)                                  \
                               .Device(DEVICE_GPU)                     \
-                              .TypeConstraint<dtype>("dtype"),        \
-                          opKernel<waveflow::GPUDevice, dtype>);
+                              .TypeConstraint<T>("T"),                \
+                          opKernel<waveflow::GPUDevice, T>);
 
 #endif //WAVEFLOW_REGISTER_KERNEL_H
