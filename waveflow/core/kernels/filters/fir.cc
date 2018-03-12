@@ -1,5 +1,5 @@
 #include "tensorflow/core/framework/op_kernel.h"
-#include "waveflow/core/kernels/common/device.h"
+#include "waveflow/core/common/device.h"
 #include "waveflow/core/kernels/filters/fir.h"
 
 namespace waveflow {

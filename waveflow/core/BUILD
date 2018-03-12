@@ -29,8 +29,8 @@ filegroup(
     name = "filters_src",
     srcs = glob(
         [
+            "common/**/*",
             "ops/filters_ops.cc",
-            "kernels/common/**/*",
             "kernels/filters/**/*.cc",
             "kernels/filters/**/*.h",
         ],
@@ -41,7 +41,7 @@ filegroup(
 filegroup(
     name = "filters_gpu_src",
     srcs = glob([
-        "kernels/common/**/*",
+        "common/**/*",
         "kernels/filters/**/*cu.cc",
         "kernels/filters/**/*.h",
     ]),

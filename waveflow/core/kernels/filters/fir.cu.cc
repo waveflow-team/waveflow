@@ -4,9 +4,9 @@
 
 #ifdef GOOGLE_CUDA
 #define EIGEN_USE_GPU
-#include "waveflow/core/kernels/common/device.h"
+#include "waveflow/core/common/device.h"
 #include "waveflow/core/kernels/filters/fir.h"
-#include "waveflow/core/kernels/common/cuda_kernel_helper.h"
+#include "waveflow/core/common/cuda_kernel_helper.h"
 #include <algorithm>
 
 namespace waveflow {

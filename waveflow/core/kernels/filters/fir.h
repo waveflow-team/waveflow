@@ -1,7 +1,7 @@
 #ifndef WAVEFLOW_FIR_H
 #define WAVEFLOW_FIR_H
-#include "waveflow/core/kernels/common/device.h"
-#include "waveflow/core/kernels/common/data_types.h"
+#include "waveflow/core/common/device.h"
+#include "waveflow/core/common/data_types.h"
 
 namespace waveflow {
 namespace functor {

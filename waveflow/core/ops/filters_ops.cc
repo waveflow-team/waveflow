@@ -1,13 +1,13 @@
-#include "tensorflow/core/framework/op.h"
 #include "tensorflow/core/framework/shape_inference.h"
 #include "tensorflow/core/framework/common_shape_fns.h"
+#include "waveflow/core/common/waveflow_op.h"
 
 using namespace tensorflow;
 
 namespace waveflow {
 namespace filters {
 
-REGISTER_OP("Fir")
+REGISTER_WF_OP("Fir")
     .Input("input: T")
     .Input("filter: T")
     .Output("output: T")

@@ -9,11 +9,9 @@
 
 // throws exception, when code != success
 // idea from Jared Hoberock (stackoverflow q: 14038589)
-#define REQUIRE_CUDA_SUCCESS(code) { requireCudaSuccess((code), __FILE__, __LINE__); }
-inline void requireCudaSuccess(cudaError_t code, const char *file, int line)
-{
-  if (code != cudaSuccess)
-  {
+#define REQUIRE_CUDA_SUCCESS(code) { require_cuda_success((code), __FILE__, __LINE__); }
+inline void require_cuda_success(cudaError_t code, const char *file, int line) {
+  if (code != cudaSuccess) {
     std::stringstream ss;
     ss << file << ":" << line;
     std::string position;
