@@ -9,11 +9,15 @@ load(
     "wf_op_cc_library",
 )
 
-# public
+# Targets:
+## Build:
 wf_op_cc_library(
-    name = "test",
+    name = "libfilters",
     srcs = [
-        ":op_files",
+        ":filters_src",
+    ],
+    gpu_srcs = [
+        ":filters_gpu_src",
     ],
     visibility = [
         "//visibility:public",
@@ -22,9 +26,23 @@ wf_op_cc_library(
 
 # private
 filegroup(
-    name = "op_files",
+    name = "filters_src",
+    srcs = glob(
+        [
+            "ops/filters_ops.cc",
+            "kernels/common/**/*",
+            "kernels/filters/**/*.cc",
+            "kernels/filters/**/*.h",
+        ],
+        exclude = ["kernels/filters/**/*cu.cc"],
+    ),
+)
+
+filegroup(
+    name = "filters_gpu_src",
     srcs = glob([
-        "ops/*.cc",
-        "kernels/**/*",
+        "kernels/common/**/*",
+        "kernels/filters/**/*cu.cc",
+        "kernels/filters/**/*.h",
     ]),
 )
