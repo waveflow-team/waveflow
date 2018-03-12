@@ -33,6 +33,7 @@ wf_op_py_test(
 py_library(
     name = "test_utils",
     srcs = glob([
-        "test_util.py"
+        "test_util.py",
+        "op_util.py"
     ]),
 )

@@ -1,9 +1,9 @@
-import tensorflow as tf
+import waveflow.python.op_util as op_util
 
-__module = tf.load_op_library('waveflow/core/libfilters.so')
+__module = op_util.load_op_library('waveflow/core/libfilters.so')
 
 def fir(**kwargs):
-  return __module.waveflow_fir(**kwargs)
+  return __module.fir(**kwargs)
 
 
 
