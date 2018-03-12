@@ -12,7 +12,7 @@
 namespace waveflow {
 namespace functor {
 
-// Input should have dims: (filtered axis, ...)
+// Input should have shape: (... ,filtered axis)
 // In other words, input array is treated as a one large list of vectors of
 // 'axisLength' size. Each vector will be convolved with the filter.
 template<typename T>
