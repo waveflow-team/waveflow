@@ -17,6 +17,15 @@ wf_op_py_library(
     srcs = ["ops/filters.py"],
     data = ["//waveflow/core:libfilters"],
     visibility = ["//visibility:public"],
+    deps = [":utils"],
+)
+
+wf_op_py_library(
+    name = "beamforming",
+    srcs = ["ops/beamforming.py"],
+    data = ["//waveflow/core:libbeamforming"],
+    visibility = ["//visibility:public"],
+    deps = [":utils"],
 )
 
 ## Tests:
@@ -26,14 +35,32 @@ wf_op_py_test(
     visibility = ["//visibility:public"],
     deps = [
         ":filters",
-        ":test_utils"
+        ":test_utils",
+        ":utils",
+    ],
+)
+
+wf_op_py_test(
+    name = "beamforming_test",
+    srcs = ["ops/beamforming_test.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":beamforming",
+        ":test_utils",
+        ":utils",
+    ],
+)
+
+py_library(
+    name = "utils",
+    srcs = [
+        "op_util.py",
     ],
 )
 
 py_library(
     name = "test_utils",
-    srcs = glob([
+    srcs = [
         "test_util.py",
-        "op_util.py"
-    ]),
+    ],
 )
