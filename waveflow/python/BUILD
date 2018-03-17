@@ -12,6 +12,36 @@ load(
 
 # Targets:
 ## Build:
+### Main:
+py_library(
+    name = "all",
+    srcs = ["__init__.py"],
+    deps = [
+        ":ops",
+        ":envs"
+    ],
+    visibility = ["//visibility:public"],
+)
+
+### Envs:
+py_library(
+    name = "envs",
+    srcs = glob(["envs/**/*"]),
+    deps = [":utils"],
+    visibility = ["//visibility:public"],
+)
+
+### Ops:
+py_library(
+    name = "ops",
+    srcs = ["__init__.py"],
+    deps = [
+        ":beamforming",
+        ":filters",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 wf_op_py_library(
     name = "filters",
     srcs = ["ops/filters.py"],

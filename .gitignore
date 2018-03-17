@@ -6,3 +6,4 @@ tools/autoconf.rc
 tools/local.rc
 # emacs org-mode files
 tmp.org
+*.egg-info

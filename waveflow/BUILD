@@ -19,3 +19,17 @@ config_setting(
     },
     visibility = ["//visibility:public"],
 )
+
+# Targets:
+## Build:
+
+
+py_library(
+    name = "py",
+    srcs = ["__init__.py"],
+    data = ["//waveflow/python:all"],
+    deps = [
+        "//waveflow/python:all",
+    ],
+    visibility = ["//visibility:public"],
+)
