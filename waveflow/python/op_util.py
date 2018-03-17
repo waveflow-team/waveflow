@@ -1,21 +1,32 @@
 import tensorflow as tf
+import os
 
 # Prefix, which should be removed from ops name
 _WAVEFLOW_PREFIX = "waveflow_"
 
 
-def load_op_library(path):
+def load_op_library(op_lib_name):
   """
   Loads given waveflow module.
 
   Currently, THIS IS THE ONLY RECOMMENDED WAY TO ACCESS WAVEFLOW MODULES.
   Accessing tensorflow modules directly is risky and may not work in future.
 
-  :param path: path to op library
+  :param op_lib_name: path to op library, relative to 'waveflow' directory
   :return: waveflow module
   """
-  module = tf.load_op_library(path)
+  module = tf.load_op_library(_resolve_op_path(op_lib_name))
   return wrap_module(module)
+
+def _resolve_op_path(op_path):
+  """
+  Resolves absolute path to given op.
+
+  :param op_path op path relative to 'waveflow' directory
+  :return: absolute path to waveflow op
+  """
+  dir_path = os.path.dirname(__file__)
+  return os.path.join(os.path.split(dir_path)[0], op_path)
 
 
 def wrap_module(module):
