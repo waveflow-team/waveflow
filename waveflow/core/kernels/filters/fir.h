@@ -9,7 +9,7 @@ namespace functor {
 template<typename Device, typename T>
 struct FIRFilter {
   // Intentionally left unimplemented.
-  void operator()(const CPUDevice &d,
+  void operator()(const Device &d,
                   const T *input,
                   const int64 inputSize,
                   const int64 axisLength,

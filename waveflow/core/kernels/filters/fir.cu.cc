@@ -1,12 +1,13 @@
 // CUDA implementation introduced by
-// Jakub Domaradzki (Warsaw University of Technology) and us4us team.
+// Marcin Lewandowski, Jakub Domaradzki (Warsaw University of Technology)
+// and us4us team.
 // Maintained by waveflow community.
 
 #ifdef GOOGLE_CUDA
 #define EIGEN_USE_GPU
 #include "waveflow/core/common/device.h"
 #include "waveflow/core/kernels/filters/fir.h"
-#include "waveflow/core/common/cuda_kernel_helper.h"
+#include "waveflow/core/common/cuda_kernel_utils.h"
 #include <algorithm>
 
 namespace waveflow {
