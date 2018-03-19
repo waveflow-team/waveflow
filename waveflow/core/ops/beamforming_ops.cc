@@ -35,7 +35,7 @@ output_height: output's height (in pixels)
 output_width: output's width (in pixels)
 
 speed_of_sound: environments speed of sound
-receiver_width: receiver's width (pitch * number of receiver elements), in meters
+receiver_width: receiver's width (pitch * number of receivers), in meters
 sampling_frequency: signal sampling frequency
 start_depth: starting depth of imaged environment, in meters
 
