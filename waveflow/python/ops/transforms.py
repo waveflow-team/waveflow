@@ -2,6 +2,22 @@ import tensorflow as tf
 import waveflow.python.op_util as op_util
 
 
+def analytic_signal(input, dt=1, name = None):
+  """
+  Computes the analytic signal:
+  x_a = x + j*h(x)
+  Where x is the input signal, h(x) - the Hilbert transform of x.
+
+  For more information see:
+
+  scipy compatibility
+  Equivalent to scipy.signal.hilbert(input)
+
+  """
+  with tf.name_scope(name, op_util.resolve_op_name("AnalyticSignal"), [input]):
+    return input + 1j * tf.cast(hilbert(input, dt), dtype=tf.complex64)
+
+
 def hilbert(input, dt=1, name=None):
   """
   Computes Hilbert transform of complex-valued signal over the inner-most
@@ -25,7 +41,7 @@ def hilbert(input, dt=1, name=None):
       n = input_shape[input_rank - 1]
       y_f = tf.fft(input)
       f = tf.cast(fftfreq(n, d=dt), dtype=tf.complex64)
-      return tf.ifft(-1j * tf.sign(f) * y_f)
+      return tf.real(tf.ifft(-1j * tf.sign(f) * y_f))
 
 
 def fftfreq(n, d=1.0, name=None):

@@ -136,7 +136,7 @@ class HilbertTest(test_util.WaveFlowTestCase):
         expected=np.sin(np.arange(0, 6.28, step=.0001))
       ),
     ]
-    self.run_test(lambda input, dt: tf.real(transforms.hilbert(input, dt)),
+    self.run_test(lambda input, dt: transforms.hilbert(input, dt),
                   tests,
                   assert_func=lambda a, d: np.testing.assert_allclose(a, d,
                                                                       atol=1e-2))
@@ -165,7 +165,7 @@ class HilbertTest(test_util.WaveFlowTestCase):
         )
       )
     ]
-    self.run_test(lambda input, dt: tf.real(transforms.hilbert(input, dt)),
+    self.run_test(lambda input, dt: transforms.hilbert(input, dt),
                   tests,
                   assert_func=lambda a, d: np.testing.assert_allclose(a, d,
                                                                       atol=1e-2))
@@ -196,7 +196,7 @@ class HilbertTest(test_util.WaveFlowTestCase):
         )
       ),
     ]
-    self.run_test(lambda input, dt: tf.real(transforms.hilbert(input, dt)),
+    self.run_test(lambda input, dt: transforms.hilbert(input, dt),
                   tests,
                   assert_func=lambda a, d: np.testing.assert_allclose(a, d,
                                                                       atol=1e-2))
