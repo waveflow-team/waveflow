@@ -1,5 +1,7 @@
-import waveflow.python.envs as envs
+from waveflow.python.ops import filters
+from waveflow.python.ops import transforms
+from waveflow.python.ops import beamforming
 
-import waveflow.python.ops.filters as filters
-import waveflow.python.ops.transforms as transforms
-import waveflow.python.ops.beamforming as beamforming
+from waveflow.python.envs import io
+from waveflow.python.envs import physics
+from waveflow.python.envs import ultrasound
