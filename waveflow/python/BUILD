@@ -16,30 +16,30 @@ load(
 py_library(
     name = "all",
     srcs = ["__init__.py"],
-    deps = [
-        ":ops",
-        ":envs"
-    ],
     visibility = ["//visibility:public"],
+    deps = [
+        ":envs",
+        ":ops",
+    ],
 )
 
 ### Envs:
 py_library(
     name = "envs",
     srcs = glob(["envs/**/*"]),
-    deps = [":utils"],
     visibility = ["//visibility:public"],
+    deps = [":utils"],
 )
 
 ### Ops:
 py_library(
     name = "ops",
     srcs = ["__init__.py"],
+    visibility = ["//visibility:public"],
     deps = [
         ":beamforming",
         ":filters",
     ],
-    visibility = ["//visibility:public"],
 )
 
 wf_op_py_library(
@@ -73,6 +73,17 @@ wf_op_py_test(
 wf_op_py_test(
     name = "beamforming_test",
     srcs = ["ops/beamforming_test.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":beamforming",
+        ":test_utils",
+        ":utils",
+    ],
+)
+
+wf_op_py_test(
+    name = "beamforming_benchmark",
+    srcs = ["ops/beamforming_benchmark.py"],
     visibility = ["//visibility:public"],
     deps = [
         ":beamforming",
