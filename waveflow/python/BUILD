@@ -39,6 +39,7 @@ py_library(
     deps = [
         ":beamforming",
         ":filters",
+        ":transforms",
     ],
 )
 
@@ -46,6 +47,13 @@ wf_op_py_library(
     name = "filters",
     srcs = ["ops/filters.py"],
     data = ["//waveflow/core:libfilters"],
+    visibility = ["//visibility:public"],
+    deps = [":utils"],
+)
+
+wf_op_py_library(
+    name = "transforms",
+    srcs = ["ops/transforms.py"],
     visibility = ["//visibility:public"],
     deps = [":utils"],
 )
@@ -71,19 +79,19 @@ wf_op_py_test(
 )
 
 wf_op_py_test(
-    name = "beamforming_test",
-    srcs = ["ops/beamforming_test.py"],
+    name = "transforms_test",
+    srcs = ["ops/transforms_test.py"],
     visibility = ["//visibility:public"],
     deps = [
-        ":beamforming",
+        ":transforms",
         ":test_utils",
         ":utils",
     ],
 )
 
 wf_op_py_test(
-    name = "beamforming_benchmark",
-    srcs = ["ops/beamforming_benchmark.py"],
+    name = "beamforming_test",
+    srcs = ["ops/beamforming_test.py"],
     visibility = ["//visibility:public"],
     deps = [
         ":beamforming",
