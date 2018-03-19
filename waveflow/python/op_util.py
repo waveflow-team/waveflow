@@ -3,6 +3,7 @@ import os
 
 # Prefix, which should be removed from ops name
 _WAVEFLOW_PREFIX = "waveflow_"
+_WAVEFLOW_CAMELCASE_PREFIX="Waveflow"
 
 
 def load_op_library(op_lib_name):
@@ -55,3 +56,6 @@ class WaveflowModule:
       if callable(op) and tf_op_name.startswith(_WAVEFLOW_PREFIX):
         wf_op_name = tf_op_name[len(_WAVEFLOW_PREFIX):]
         setattr(self, wf_op_name, op)
+
+def resolve_op_name(name):
+  return _WAVEFLOW_CAMELCASE_PREFIX + name
