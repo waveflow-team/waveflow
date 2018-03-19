@@ -3,7 +3,6 @@ import os
 import glob
 
 ops_so = ['core/' + os.path.basename(x) for x in glob.glob('waveflow/core/*.so')]
-print('opsy %s' % str(ops_so))
 
 setup(name='waveflow',
       version='0.1rc1',
