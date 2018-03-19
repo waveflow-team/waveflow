@@ -26,7 +26,7 @@ py_library(
 ### Envs:
 py_library(
     name = "envs",
-    srcs = glob(["envs/**/*"]),
+    srcs = glob(["envs/*"]),
     visibility = ["//visibility:public"],
     deps = [":utils"],
 )
@@ -83,8 +83,8 @@ wf_op_py_test(
     srcs = ["ops/transforms_test.py"],
     visibility = ["//visibility:public"],
     deps = [
-        ":transforms",
         ":test_utils",
+        ":transforms",
         ":utils",
     ],
 )
