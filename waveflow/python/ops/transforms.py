@@ -9,6 +9,7 @@ def analytic_signal(input, dt=1, name = None):
   Where x is the input signal, h(x) - the Hilbert transform of x.
 
   For more information see:
+  https://en.wikipedia.org/wiki/Analytic_signal
 
   scipy compatibility
   Equivalent to scipy.signal.hilbert(input)
