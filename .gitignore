@@ -7,3 +7,4 @@ tools/local.rc
 # emacs org-mode files
 tmp.org
 *.egg-info
+.ipynb_checkpoints
