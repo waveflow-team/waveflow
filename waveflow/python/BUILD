@@ -39,8 +39,16 @@ py_library(
     deps = [
         ":beamforming",
         ":filters",
+        ":math_ops",
         ":transforms",
     ],
+)
+
+wf_op_py_library(
+    name = "math_ops",
+    srcs = ["ops/math_ops.py"],
+    visibility = ["//visibility:public"],
+    deps = [":utils"],
 )
 
 wf_op_py_library(
@@ -67,6 +75,17 @@ wf_op_py_library(
 )
 
 ## Tests:
+wf_op_py_test(
+    name = "math_ops_test",
+    srcs = ["ops/math_ops_test.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "math_ops",
+        ":test_utils",
+        ":utils",
+    ],
+)
+
 wf_op_py_test(
     name = "filters_test",
     srcs = ["ops/filters_test.py"],
