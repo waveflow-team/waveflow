@@ -14,22 +14,25 @@ def clip_by_decibel(input, clip_value_min, clip_value_max, name=None):
   """
   with tf.name_scope(name, op_util.resolve_op_name("ClipByDecibel"),
                      [input, clip_value_min, clip_value_max]):
-    with tf.control_dependencies(
+    clip_value_max = tf.convert_to_tensor(clip_value_max, dtype=input.dtype)
+    clip_value_min = tf.convert_to_tensor(clip_value_min, dtype=input.dtype)
+    zero = tf.constant(0, dtype=input.dtype)
+    with tf.control_dependencies([
       tf.assert_greater_equal(clip_value_max, clip_value_min,
                               data=[clip_value_min, clip_value_max],
                               message="must be: clip_value_max >= clip_value_min"),
-      tf.assert_greater_equal(clip_value_max, 0, data=[clip_value_max],
+      tf.assert_greater_equal(clip_value_max, zero, data=[clip_value_max],
                               message="clip value max must be >= 0 "),
-      tf.assert_greater_equal(clip_value_min, 0, data=[clip_value_min],
+      tf.assert_greater_equal(clip_value_min, zero, data=[clip_value_min],
                               message="clip value min must be >= 0 ")
-    ):
+      ]):
       abs_input = tf.abs(input)
-      ref_value = tf.maximum(abs_input)
+      ref_value = tf.reduce_max(abs_input)
       input_db = tf.cond(
-        tf.equal(ref_value, 0),
+        tf.equal(ref_value, zero),
         # We cannot use 0 as ref. value in dB scale.
         true_fn=lambda: abs_input,
         false_fn=lambda: units.to_decibel(abs_input, ref_value)
       )
       # input_db has non-positive values
-      return input_db.clip_by_value(input_db, -1*clip_value_max, -1*clip_value_min)
+      return tf.clip_by_value(input_db, -1*clip_value_max, -1*clip_value_min)

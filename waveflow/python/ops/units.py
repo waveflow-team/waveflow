@@ -14,8 +14,10 @@ def to_decibel(x, ref_val, name=None):
   :return: 10*log10(value/reference_value)
   """
   with tf.name_scope(name, op_util.resolve_op_name("Bel"), [x]):
-    with tf.control_dependencies(
-      tf.assert_greater(ref_val, 0, data=[ref_val],
-                        message="reference value must be > 0")):
+    zero = tf.constant(0, dtype=ref_val.dtype)
+    with tf.control_dependencies([
+      tf.assert_greater(ref_val, zero, data=[ref_val],
+                        message="reference value must be > 0")
+      ]):
       return 10*math_ops.log10(x / ref_val)
 
