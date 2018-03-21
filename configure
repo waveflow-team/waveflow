@@ -3,6 +3,7 @@
 set -xe
 PYTHON_BIN=python
 CONF_FILE=tools/autoconf.rc
+LOCAL_CONF_FILE=tools/local.rc
 
 TF_INC=$(${PYTHON_BIN} -c 'import tensorflow as tf; print(tf.sysconfig.get_include())')
 TF_LIB=$(${PYTHON_BIN} -c 'import tensorflow as tf; print(tf.sysconfig.get_lib())')
@@ -11,3 +12,7 @@ echo "build --action_env TF_INCLUDE_PATH=${TF_INC}" > ${CONF_FILE}
 echo "build --action_env TF_LIB_PATH=${TF_LIB}" >> ${CONF_FILE}
 echo "build --test_env TF_INCLUDE_PATH=${TF_INC}" >> ${CONF_FILE}
 echo "build --test_env TF_LIB_PATH=${TF_LIB}" >> ${CONF_FILE}
+
+if [ ! -f ${LOCAL_CONF_FILE} ]; then
+    echo "#You can put your custom build parameters here." > ${LOCAL_CONF_FILE}
+fi
