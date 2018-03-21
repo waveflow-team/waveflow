@@ -2,7 +2,7 @@ import tensorflow as tf
 import waveflow.python.op_util as op_util
 
 
-def analytic_signal(input, dt=1, name = None):
+def analytic_signal(input, dt=1, axis=None, name=None):
   """
   Computes the analytic signal:
   x_a = x + j*h(x)
@@ -16,23 +16,36 @@ def analytic_signal(input, dt=1, name = None):
 
   """
   with tf.name_scope(name, op_util.resolve_op_name("AnalyticSignal"), [input]):
-    return input + 1j * tf.cast(hilbert(input, dt), dtype=tf.complex64)
+    return input + 1j * tf.cast(hilbert(input, dt=dt, axis=axis), dtype=tf.complex64)
 
 
-def hilbert(input, dt=1, name=None):
+def hilbert(input, dt=1, axis=None, name=None):
   """
   Computes Hilbert transform of complex-valued signal over the inner-most
-  dimension of input.
+  dimension of input. Computations will be done along given axis.
+
+  Disclaimer:
+  This function currently does not support tensors with undefined dimensions.
 
   scipy compatibility
   Equivalent to (-1)*scipy.fftpack.hilbert(input)
 
   :param input: tensor of tf.complex64 values
   :param dt: time step between consecutive samples
+  :param axis input's dimension
   :return: tensor with values of type tf.complex64
   """
   with tf.name_scope(name, op_util.resolve_op_name("Hilbert"), [input]):
     input = tf.convert_to_tensor(value=input, name="input", dtype=tf.complex64)
+    # TODO(pjarosik) axis parameter should be handled by tf.fft
+    if axis is not None:
+      rank = len(input.get_shape().as_list())
+      assert 0 <= axis < rank
+      perm = [x for x in range(0, rank)]
+      perm[axis] = rank - 1
+      perm[rank - 1] = axis
+      input = tf.transpose(input, perm=perm)
+
     input_shape = tf.shape(input)
     input_rank = tf.rank(input)
     with tf.control_dependencies([
@@ -42,7 +55,10 @@ def hilbert(input, dt=1, name=None):
       n = input_shape[input_rank - 1]
       y_f = tf.fft(input)
       f = tf.cast(fftfreq(n, d=dt), dtype=tf.complex64)
-      return tf.real(tf.ifft(-1j * tf.sign(f) * y_f))
+      output = tf.real(tf.ifft(-1j * tf.sign(f) * y_f))
+      if axis is not None:
+        output = tf.transpose(output, perm = perm)
+      return output
 
 
 def fftfreq(n, d=1.0, name=None):
