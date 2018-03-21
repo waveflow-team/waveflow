@@ -124,7 +124,7 @@ void STA<GPUDevice, T>::operator()(const GPUDevice &d,
                                    T *output) {
   const cudaStream_t &stream = d.stream();
 
-  dim3 blockDim(std::min(8, outputWidth), std::min(32, outputHeight));
+  dim3 blockDim(std::min<int64>(8, outputWidth), std::min<int64>(32, outputHeight));
   dim3 gridDim(outputWidth / blockDim.x, outputHeight / blockDim.y);
 
   sta_with_focusing_gpu<T> << < gridDim, blockDim, 0, stream >> > (
