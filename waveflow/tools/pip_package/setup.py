@@ -29,7 +29,10 @@ setup(name='waveflow',
           'Programming Language :: Python :: 3.6',
       ],
       packages=find_packages(),
-      install_requires=['tensorflow>=1.6.0'],
+      install_requires=[
+        'tensorflow>=1.6.0',
+        'scipy>=1.0.0'
+      ],
       package_data={
         'waveflow': ops_so
       }
