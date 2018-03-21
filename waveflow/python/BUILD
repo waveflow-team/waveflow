@@ -40,13 +40,29 @@ py_library(
         ":beamforming",
         ":filters",
         ":math_ops",
+        ":signal_ops",
         ":transforms",
+        ":units",
     ],
 )
 
 wf_op_py_library(
     name = "math_ops",
     srcs = ["ops/math_ops.py"],
+    visibility = ["//visibility:public"],
+    deps = [":utils"],
+)
+
+wf_op_py_library(
+    name = "signal_ops",
+    srcs = ["ops/signal_ops.py"],
+    visibility = ["//visibility:public"],
+    deps = [":utils"],
+)
+
+wf_op_py_library(
+    name = "units",
+    srcs = ["ops/units.py"],
     visibility = ["//visibility:public"],
     deps = [":utils"],
 )
