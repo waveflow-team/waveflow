@@ -9,13 +9,13 @@ namespace beamforming {
 
 REGISTER_WF_OP("Sta")
     .Input("input: T")
-    .Input("speed_of_sound: float32")
-    .Input("receiver_width: float32")
-    .Input("sampling_frequency: float32")
-    .Input("start_depth: float32")
     .Output("output: T")
     .Attr("output_height: int")
     .Attr("output_width: int")
+    .Attr("speed_of_sound: float")
+    .Attr("receiver_width: float")
+    .Attr("sampling_frequency: float")
+    .Attr("start_depth: float")
     .Attr("T: {float, double, int32}")
     .SetShapeFn([](::tensorflow::shape_inference::InferenceContext *c) {
       int height, width;

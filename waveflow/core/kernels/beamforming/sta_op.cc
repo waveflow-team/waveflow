@@ -27,10 +27,15 @@ class STAOpKernel : public OpKernel {
   explicit STAOpKernel(OpKernelConstruction *ctx) : OpKernel(ctx) {
     int output_height, output_width;
     OP_REQUIRES_OK(ctx, ctx->GetAttr("output_height", &output_height));
+    OP_REQUIRES_OK(ctx, ctx->GetAttr("output_width", &output_width));
+    OP_REQUIRES_OK(ctx, ctx->GetAttr("speed_of_sound", &(this->speed_of_sound_)));
+    OP_REQUIRES_OK(ctx, ctx->GetAttr("receiver_width", &(this->receiver_width_)));
+    OP_REQUIRES_OK(ctx, ctx->GetAttr("sampling_frequency", &(this->sampling_frequency_)));
+    OP_REQUIRES_OK(ctx, ctx->GetAttr("start_depth", &(this->start_depth_)));
+
     OP_REQUIRES(ctx,
                 output_height > 1,
                 errors::InvalidArgument("output height should be > 1"));
-    OP_REQUIRES_OK(ctx, ctx->GetAttr("output_width", &output_width));
     OP_REQUIRES(ctx,
                 output_width > 1,
                 errors::InvalidArgument("output width should be > 1"));
@@ -40,28 +45,16 @@ class STAOpKernel : public OpKernel {
   }
 
   void Compute(OpKernelContext *ctx) override {
-    const Tensor *input, *speedOfSoundSc,
-        *receiverWidthSc, *samplingFrequencySc,
-        *startDepthSc;
+    const Tensor *input;
 
     GET_INPUT_TENSOR(ctx, "input", input);
-    GET_INPUT_SCALAR(ctx, "speed_of_sound", speedOfSoundSc);
-    GET_INPUT_SCALAR(ctx, "receiver_width", receiverWidthSc);
-    GET_INPUT_SCALAR(ctx, "sampling_frequency", samplingFrequencySc);
-    GET_INPUT_SCALAR(ctx, "start_depth", startDepthSc);
 
     const int64 eventsCount = input->dim_size(0);
     const int64 channelsCount = input->dim_size(1);
     const int64 samplesCount = input->dim_size(2);
 
-    const float speedOfSound = get_scalar_value<float>(speedOfSoundSc);
-
-    const float receiverWidth = get_scalar_value<float>(receiverWidthSc);
-    const float
-        samplingFrequency = get_scalar_value<float>(samplingFrequencySc);
-
-    const float startDepth = get_scalar_value<float>(startDepthSc);
-    float areaHeight = samplesCount * speedOfSound / samplingFrequency * 0.5f;
+    float areaHeight = samplesCount * (this->speed_of_sound_) /
+        this->sampling_frequency_ * 0.5f;
 
     OP_REQUIRES(ctx,
                 input->dims() == 3,
@@ -80,10 +73,10 @@ class STAOpKernel : public OpKernel {
         input->flat<T>().data(),
         channelsCount,
         samplesCount,
-        speedOfSound,
-        receiverWidth,
-        samplingFrequency,
-        startDepth,
+        this->speed_of_sound_,
+        this->receiver_width_,
+        this->sampling_frequency_,
+        this->start_depth_,
         areaHeight,
         output_shape_.dim_size(0),
         output_shape_.dim_size(1),
@@ -92,6 +85,10 @@ class STAOpKernel : public OpKernel {
   }
  private:
   TensorShape output_shape_;
+  float speed_of_sound_;
+  float receiver_width_;
+  float sampling_frequency_;
+  float start_depth_;
 };
 #define REGISTER_CPU(T) REGISTER_WF_CPU_KERNEL("Sta", STAOpKernel, T)
 REGISTER_CPU(float)
