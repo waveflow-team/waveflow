@@ -1,6 +1,6 @@
-Waveflow: signal processing with tensorflow.
+# Waveflow: signal processing with tensorflow.
 
-**Please note, that this project is still on early stage of development and its API may change in future.**
+Please note, that this project is still on early stage of development and its API may change in future.**
 
 Examples, Tests & Benchmarks
 ------
