@@ -1,6 +1,6 @@
 # Waveflow: signal processing with tensorflow.
 
-Please note, that this project is still on early stage of development and its API may change in future.**
+Please note, that this project is still on early stage of development and its API may change in future.
 
 Examples, Tests & Benchmarks
 ------
@@ -39,6 +39,3 @@ bazel build //waveflow/tools/pip_package:build_pip_package
 ./bazel-bin/waveflow/tools/pip_package/build_pip_package /tmp
 ```
 The waveflow .whl file should be in  your `/tmp` directory.
-
-
-
