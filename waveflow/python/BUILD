@@ -28,7 +28,7 @@ py_library(
     name = "envs",
     srcs = glob(["envs/*"]),
     visibility = ["//visibility:public"],
-    deps = [":utils"],
+    deps = [":op_utils"],
 )
 
 ### Ops:
@@ -37,108 +37,126 @@ py_library(
     srcs = ["__init__.py"],
     visibility = ["//visibility:public"],
     deps = [
-        ":beamforming",
-        ":filters",
+        ":math",
+        ":signal",
+    ],
+)
+
+py_library(
+    name = "math",
+    srcs = ["ops/math/__init__.py"],
+    visibility = ["//visibility:public"],
+    deps = [
         ":math_ops",
-        ":signal_ops",
-        ":transforms",
-        ":units",
+        ":transform_ops",
+        ":unit_ops",
     ],
 )
 
 wf_op_py_library(
     name = "math_ops",
-    srcs = ["ops/math_ops.py"],
+    srcs = ["ops/math/math_ops.py"],
     visibility = ["//visibility:public"],
-    deps = [":utils"],
+    deps = [":op_utils"],
+)
+
+wf_op_py_library(
+    name = "transform_ops",
+    srcs = ["ops/math/transform_ops.py"],
+    visibility = ["//visibility:public"],
+    deps = [":op_utils"],
+)
+
+wf_op_py_library(
+    name = "unit_ops",
+    srcs = ["ops/math/unit_ops.py"],
+    visibility = ["//visibility:public"],
+    deps = [":op_utils"],
+)
+
+py_library(
+    name = "signal",
+    srcs = ["ops/signal/__init__.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":beamforming_ops",
+        ":filter_ops",
+        ":signal_ops",
+    ],
 )
 
 wf_op_py_library(
     name = "signal_ops",
-    srcs = ["ops/signal_ops.py"],
+    srcs = ["ops/signal/signal_ops.py"],
     visibility = ["//visibility:public"],
-    deps = [":utils"],
+    deps = [":op_utils"],
 )
 
 wf_op_py_library(
-    name = "units",
-    srcs = ["ops/units.py"],
-    visibility = ["//visibility:public"],
-    deps = [":utils"],
-)
-
-wf_op_py_library(
-    name = "filters",
-    srcs = ["ops/filters.py"],
+    name = "filter_ops",
+    srcs = ["ops/signal/filter_ops.py"],
     data = ["//waveflow/core:libfilters"],
     visibility = ["//visibility:public"],
-    deps = [":utils"],
+    deps = [":op_utils"],
 )
 
 wf_op_py_library(
-    name = "transforms",
-    srcs = ["ops/transforms.py"],
-    visibility = ["//visibility:public"],
-    deps = [":utils"],
-)
-
-wf_op_py_library(
-    name = "beamforming",
-    srcs = ["ops/beamforming.py"],
+    name = "beamforming_ops",
+    srcs = ["ops/signal/beamforming_ops.py"],
     data = ["//waveflow/core:libbeamforming"],
     visibility = ["//visibility:public"],
-    deps = [":utils"],
+    deps = [":op_utils"],
 )
 
 ## Tests:
 wf_op_py_test(
     name = "math_ops_test",
-    srcs = ["ops/math_ops_test.py"],
+    srcs = ["ops/math/math_ops_test.py"],
     visibility = ["//visibility:public"],
     deps = [
-        "math_ops",
+        ":math_ops",
         ":test_utils",
-        ":utils",
+        ":op_utils",
     ],
 )
 
 wf_op_py_test(
-    name = "filters_test",
-    srcs = ["ops/filters_test.py"],
+    name = "transform_ops_test",
+    srcs = ["ops/math/transform_ops_test.py"],
     visibility = ["//visibility:public"],
     deps = [
-        ":filters",
         ":test_utils",
-        ":utils",
+        ":transform_ops",
+        ":op_utils",
     ],
 )
 
 wf_op_py_test(
-    name = "transforms_test",
-    srcs = ["ops/transforms_test.py"],
+    name = "beamforming_ops_test",
+    srcs = ["ops/signal/beamforming_ops_test.py"],
     visibility = ["//visibility:public"],
     deps = [
+        ":beamforming_ops",
         ":test_utils",
-        ":transforms",
-        ":utils",
+        ":op_utils",
     ],
 )
 
 wf_op_py_test(
-    name = "beamforming_test",
-    srcs = ["ops/beamforming_test.py"],
+    name = "filter_ops_test",
+    srcs = ["ops/signal/filter_ops_test.py"],
     visibility = ["//visibility:public"],
     deps = [
-        ":beamforming",
+        ":filter_ops",
         ":test_utils",
-        ":utils",
+        ":op_utils",
     ],
 )
 
 py_library(
-    name = "utils",
+    name = "op_utils",
     srcs = [
-        "op_util.py",
+        "ops/op_util.py",
     ],
 )
 

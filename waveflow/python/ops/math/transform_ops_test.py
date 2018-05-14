@@ -1,7 +1,7 @@
 import unittest
 import tensorflow as tf
 from tensorflow.python.framework import errors_impl as tf_errors
-import waveflow.python.ops.transforms as transforms
+import waveflow.python.ops.math.transform_ops as transform_ops
 import waveflow.python.test_util as test_util
 from waveflow.python.test_util import ParamTest
 import numpy as np
@@ -41,7 +41,7 @@ class FFTFreqTest(test_util.WaveFlowTestCase):
         expected=np.divide([0, 1, 2, 3, 4, -4, -3, -2, -1], 9 * .2)
       ),
     ]
-    self.run_test(transforms.fftfreq, tests,
+    self.run_test(transform_ops.fftfreq, tests,
                   assert_func=np.testing.assert_allclose)
 
   def test_fftfreq_edge_cases(self):
@@ -68,7 +68,7 @@ class FFTFreqTest(test_util.WaveFlowTestCase):
         expected=[0, -.5],
       )
     ]
-    self.run_test(transforms.fftfreq, tests,
+    self.run_test(transform_ops.fftfreq, tests,
                   assert_func=np.testing.assert_allclose)
 
   def test_fftfreq_numpy_equivalence(self):
@@ -107,7 +107,7 @@ class FFTFreqTest(test_util.WaveFlowTestCase):
         expected=np.fft.fftfreq(n=15, d=.2)
       ),
     ]
-    self.run_test(transforms.fftfreq, tests,
+    self.run_test(transform_ops.fftfreq, tests,
                   assert_func=np.testing.assert_allclose)
 
 
@@ -136,7 +136,7 @@ class HilbertTest(test_util.WaveFlowTestCase):
         expected=np.sin(np.arange(0, 6.28, step=.0001))
       ),
     ]
-    self.run_test(lambda input, dt: transforms.hilbert(input, dt),
+    self.run_test(lambda input, dt: transform_ops.hilbert(input, dt),
                   tests,
                   assert_func=lambda a, d: np.testing.assert_allclose(a, d,
                                                                       atol=1e-2))
@@ -165,7 +165,7 @@ class HilbertTest(test_util.WaveFlowTestCase):
         )
       )
     ]
-    self.run_test(lambda input, dt: transforms.hilbert(input, dt),
+    self.run_test(lambda input, dt: transform_ops.hilbert(input, dt),
                   tests,
                   assert_func=lambda a, d: np.testing.assert_allclose(a, d,
                                                                       atol=1e-2))
@@ -196,7 +196,7 @@ class HilbertTest(test_util.WaveFlowTestCase):
         )
       ),
     ]
-    self.run_test(lambda input, dt: transforms.hilbert(input, dt),
+    self.run_test(lambda input, dt: transform_ops.hilbert(input, dt),
                   tests,
                   assert_func=lambda a, d: np.testing.assert_allclose(a, d,
                                                                       atol=1e-2))

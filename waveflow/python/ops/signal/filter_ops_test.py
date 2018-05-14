@@ -1,12 +1,11 @@
 import unittest
 import tensorflow as tf
 from tensorflow.python.framework import errors_impl as tf_errors
-import waveflow.python.ops.filters as filters
+import waveflow.python.ops.signal.filter_ops as filter_ops
 import waveflow.python.test_util as test_util
 from waveflow.python.test_util import ParamTest
 import numpy as np
 import scipy.fftpack
-
 
 class FIRFilterTest(test_util.WaveFlowTestCase):
 
@@ -73,7 +72,7 @@ class FIRFilterTest(test_util.WaveFlowTestCase):
         exception=tf_errors.InvalidArgumentError
       ),
     ]
-    self.run_test(filters.fir, tests)
+    self.run_test(filter_ops.fir, tests)
 
   def test_fir_int32_pass_edge_cases(self):
     tests = [
@@ -102,7 +101,7 @@ class FIRFilterTest(test_util.WaveFlowTestCase):
         expected=[3, 10]
       ),
     ]
-    self.run_test(filters.fir, tests, assert_func=np.testing.assert_array_equal)
+    self.run_test(filter_ops.fir, tests, assert_func=np.testing.assert_array_equal)
 
   def test_fir_int32_works_for_n_dims(self):
     """ FIR should work for n > 1 dimensional input tensors,
@@ -143,7 +142,7 @@ class FIRFilterTest(test_util.WaveFlowTestCase):
                    [0, 3, 19]]]
       ),
     ]
-    self.run_test(func=filters.fir,
+    self.run_test(func=filter_ops.fir,
                   tests=tests,
                   assert_func=np.testing.assert_array_equal)
 
@@ -158,7 +157,7 @@ class FIRFilterTest(test_util.WaveFlowTestCase):
         expected=[2.2, 7.41, 17.2, 27.03]
       ),
     ]
-    self.run_test(func=filters.fir,
+    self.run_test(func=filter_ops.fir,
                   tests=tests,
                   assert_func=np.testing.assert_allclose)
 
