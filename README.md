@@ -1,6 +1,6 @@
-Waveflow: signal processing with tensorflow.
+# Waveflow: signal processing with tensorflow.
 
-**Please note, that this project is still on early stage of development and its API may change in future.**
+Please note, that this project is still on early stage of development and its API may change in future.
 
 Examples, Tests & Benchmarks
 ------
@@ -33,12 +33,7 @@ cd waveflow
 
 Build it:
 ```bash
-# If you want to build with cuda suport: add --config=cuda.
-bazel build //waveflow/tools/pip_package:build_pip_package
-# You can change the '/tmp' to any destination directory you want.
-./bazel-bin/waveflow/tools/pip_package/build_pip_package /tmp
+# If you want to build with cuda support: add --config=cuda.
+bazel run -- //waveflow/tools/pip_package:build_pip_package /tmp
 ```
 The waveflow .whl file should be in  your `/tmp` directory.
-
-
-

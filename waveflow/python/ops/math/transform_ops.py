@@ -11,8 +11,7 @@ from waveflow.python.ops import op_util
 
 def hilbert(input, dt=1, axis=None, name=None):
   """
-  Computes Hilbert transform of complex-valued signal over the inner-most
-  dimension of input. Computations will be done along given axis.
+  Computes Hilbert transform of complex-valued signal. Computations will be done along given axis.
 
   Disclaimer:
   This function currently does not support tensors with undefined dimensions.
