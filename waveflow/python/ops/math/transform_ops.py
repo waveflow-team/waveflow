@@ -1,22 +1,12 @@
+"""
+Transform functions.
+"""
+
 import tensorflow as tf
-import waveflow.python.op_util as op_util
+from waveflow.python.ops import op_util
 
 
-def analytic_signal(input, dt=1, axis=None, name=None):
-  """
-  Computes the analytic signal:
-  x_a = x + j*h(x)
-  Where x is the input signal, h(x) - the Hilbert transform of x.
 
-  For more information see:
-  https://en.wikipedia.org/wiki/Analytic_signal
-
-  scipy compatibility
-  Equivalent to scipy.signal.hilbert(input)
-
-  """
-  with tf.name_scope(name, op_util.resolve_op_name("AnalyticSignal"), [input]):
-    return input + 1j * tf.cast(hilbert(input, dt=dt, axis=axis), dtype=tf.complex64)
 
 
 def hilbert(input, dt=1, axis=None, name=None):

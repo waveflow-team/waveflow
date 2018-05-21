@@ -2,31 +2,27 @@ import unittest
 import tensorflow as tf
 from tensorflow.python.framework import errors_impl as tf_errors
 import waveflow.python.ops.beamforming as beamforming
-import waveflow.python.test_util as test_util
+from waveflow.python import test_util
 from waveflow.python.test_util import ParamTest
 import numpy as np
 
-class STATest(test_util.WaveFlowTestCase):
+class STABenchmark(test_util.WaveFlowTestCase):
 
   def test_sta_with_focusing_double(self):
+    print('after transpose')
+    x = np.load('/home/pjarosik/sandbox/usg/sta/usg1_sta_nitki_reduced.npy')
+    y = x.transpose((0, 2, 1))
     tests = [
       ParamTest(
         name="test",
         params={
-            #           t0, t1, t2, t3,
-            "input": [[[0., 0., 0., 0.],
-                       [0., 0., 0., 0.],
-                       [0., 0., 0., 0.],
-                       [0., 0., 0., 0.]],
-                      [[0., 0., 1., 0.],
-                       [0., 0., 1., 0.],
-                       [0., 0., 1., 0.],
-                       [0., 0., 1., 0.]]],
-            "receiver_width": 1,
-            "speed_of_sound": 1,
-            "sampling_frequency": 1,
-            "start_depth": 0,
-            "output_shape": (4, 2),
+            "input": x,
+            "receiver_width": 64*.21e-3,
+            "speed_of_sound": 1490.,
+            "sampling_frequency": 50e6,
+            "start_depth": 0.005,
+            "output_height": 256,
+            "output_width": 128,
         },
         expected=[[0.,0.],
                   [0.,1.71],

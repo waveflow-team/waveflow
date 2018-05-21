@@ -1,7 +1,7 @@
 import unittest
 import waveflow.python.test_util as test_util
 from waveflow.python.test_util import ParamTest
-import waveflow.python.ops.math_ops as math_ops
+import waveflow.python.ops.math.math_ops as math_ops
 import numpy as np
 import math as math
 

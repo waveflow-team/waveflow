@@ -1,4 +1,4 @@
-import waveflow.python.op_util as op_util
+from waveflow.python.ops import op_util
 
 __module = op_util.load_op_library('core/libbeamforming.so')
 

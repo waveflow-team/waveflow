@@ -1,6 +1,27 @@
-import waveflow.python.ops.units as units
+"""
+Common functions for signal processing.
+"""
+
 import tensorflow as tf
-import waveflow.python.op_util as op_util
+import waveflow as wf
+from waveflow.python.ops import op_util
+from waveflow import hilbert
+
+def analytic_signal(input, dt=1, axis=None, name=None):
+  """
+  Computes the analytic signal:
+  x_a = x + j*h(x)
+  Where x is the input signal, h(x) - the Hilbert transform of x.
+
+  For more information see:
+  https://en.wikipedia.org/wiki/Analytic_signal
+
+  scipy compatibility
+  Equivalent to scipy.signal.hilbert(input)
+  """
+  with tf.name_scope(name, op_util.resolve_op_name("AnalyticSignal"), [input]):
+    return input + 1j * tf.cast(hilbert(input, dt=dt, axis=axis), dtype=tf.complex64)
+
 
 def clip_by_decibel(input, clip_value_min, clip_value_max, name=None):
   """
@@ -32,7 +53,7 @@ def clip_by_decibel(input, clip_value_min, clip_value_max, name=None):
         tf.equal(ref_value, zero),
         # We cannot use 0 as ref. value in dB scale.
         true_fn=lambda: abs_input,
-        false_fn=lambda: units.to_decibel(abs_input, ref_value)
+        false_fn=lambda: wf.to_decibel(abs_input, ref_value)
       )
       # input_db has non-positive values
       return tf.clip_by_value(input_db, -1*clip_value_max, -1*clip_value_min)
